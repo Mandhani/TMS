@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :tours
   get 'users/index'
   get 'users/edit'
   get 'users/new'
@@ -8,5 +9,5 @@ Rails.application.routes.draw do
   get 'users/destroy'
   devise_for :users, :controllers => { registrations: 'registrations' }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root to: 'users#index'
+  root to: 'tours#index'
 end
