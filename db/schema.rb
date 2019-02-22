@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2019_02_20_224253) do
 
-  create_table "_USERS", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2019_02_20_224253) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "type"
+    t.integer "user_type"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -42,16 +42,16 @@ ActiveRecord::Schema.define(version: 2019_02_20_224253) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "email", null: false
-    t.string "encrypted_password"
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer "user_type", null: false
-  end
+#  create_table "users", force: :cascade do |t|
+#    t.string "email", null: false
+#    t.string "encrypted_password"
+#    t.string "reset_password_token"
+#    t.datetime "reset_password_sent_at"
+#    t.datetime "remember_created_at"
+#    t.datetime "created_at"
+#    t.datetime "updated_at"
+#    t.integer "user_type", null: false
+#  end
 
   create_table "usertypes", force: :cascade do |t|
     t.string "user_type"
