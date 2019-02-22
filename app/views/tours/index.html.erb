@@ -1,7 +1,9 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Tours</h1>
-
+<script>
+  alert("<% current_user.email %>");
+</script>
 <table>
   <thead>
     <tr>
@@ -9,10 +11,12 @@
       <th>Description</th>
       <th>Price</th>
       <th>Booking deadline</th>
-      <th>Duration start</th>
-      <th>Duration end</th>
-      <th>Start location</th>
-      <th>Itenary</th>
+      <% if Usertype.find(current_user.user_type) == 1 %>
+        <th>Duration start</th>
+        <th>Duration end</th>
+        <th>Start location</th>
+        <th>Itenary</th>
+      <% end %>
       <th>Contact</th>
       <th>Seats</th>
       <th>Status</th>
@@ -28,10 +32,12 @@
         <td><%= tour.description %></td>
         <td><%= tour.price %></td>
         <td><%= tour.booking_deadline %></td>
-        <td><%= tour.duration_start %></td>
-        <td><%= tour.duration_end %></td>
-        <td><%= tour.start_location %></td>
-        <td><%= tour.itenary %></td>
+        <% if Usertype.find(current_user.user_type) == 1 %>
+          <td><%= tour.duration_start %></td>
+          <td><%= tour.duration_end %></td>
+          <td><%= tour.start_location %></td>
+          <td><%= tour.itenary %></td>
+        <% end %>
         <td><%= tour.contact %></td>
         <td><%= tour.seats %></td>
         <td><%= tour.status %></td>

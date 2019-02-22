@@ -1,6 +1,10 @@
 module UsersHelper
-  def isAdmin
-    Usertype.find(current_user.user_type) == 1
+  def isAdmin()
+    if Usertype.find(current_user.user_type) == 1
+      true
+    else
+      false
+    end
   end
   def isCustomer
     Usertype.find(current_user.user_type) == 2
