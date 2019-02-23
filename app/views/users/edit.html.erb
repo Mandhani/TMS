@@ -3,6 +3,9 @@
 
   <%= render 'form', user: @user %>
   <%= link_to 'Back', users_path %>
+<% elsif user_signed_in? %>
+  <p>You are not authorized to edit other users.</p>
+  <%= link_to 'Back', users_path %>
 <% else %>
-  <%= link_to "You must be logged in to edit users.", login_path %>
+  <%= link_to "You must be logged in to edit users.", new_user_session_path %>
 <% end %>

@@ -1,11 +1,11 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
     if current_user.user_type == 1
       @users = User.all
     else
-      @users = current_user
+      @users = User.where("id = ?", current_user.id)
     end
   end
 
@@ -13,12 +13,25 @@ class UsersController < ApplicationController
   end
 
   def new
+    @user = User.new
   end
 
   def show
   end
 
   def create
+    @user = User.new(user_params)
+    respond_to do |format|
+
+      if @user.save
+        format.html {redirect_to current_user, notice: 'User was successfully created.'}
+        format.json {render :show, status: :created, location: @user}
+      else
+        puts "Error Mohit"
+        format.html {render :new}
+        format.json {render json: @user.errors, status: :unprocessable_entity}
+      end
+    end
   end
 
   def update

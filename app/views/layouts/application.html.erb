@@ -20,5 +20,8 @@
     <%= link_to "Login", new_user_session_path  %>
   <% end %>
     <%= yield %>
+  <%= link_to "List all tours", tours_url %>
+  <%= link_to "Interested House List", tour_interest_lists_url %>
+
   </body>
 </html>

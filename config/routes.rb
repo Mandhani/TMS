@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :tour_interest_lists
   resources :bookings
   resources :tours
   devise_for :users, :controllers => { registrations: 'registrations' }

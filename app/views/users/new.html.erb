@@ -1,2 +1,6 @@
-<h1>Users#new</h1>
-<p>Find me in app/views/users/new.html.erb</p>
+<h3>Hello. You are at New Users page.</h3>
+<% if current_user.user_type == 1 %>
+  <%= render 'form', user: @user %>
+<%else%>
+  <h3> You don't have permission to add user. </h3>
+<% end %>

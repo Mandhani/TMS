@@ -21,9 +21,21 @@
     <%= form.text_field :password %>
   </div>
 
+  <% if user_signed_in? %>
+    <div class="field">
+      <%= form.label :password_confirmation %><br />
+      <%= form.password_field :password_confirmation, autocomplete: "new-password" %>
+    </div>
+  <% end %>
+
   <div class="field">
     <%= form.label :email %>
     <%= form.text_field :email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :user_type %><br />
+    <%= select("user", "user_type", Usertype.all.collect{ |c| [ c.user_type, c.id] }) %>
   </div>
 
   <div class="actions">
