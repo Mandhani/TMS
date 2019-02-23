@@ -6,8 +6,21 @@ ruby '2.5.3'
 gem 'devise'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.2'
-# Use sqlite3 as the database for Active Record
+# Use sqlite3 as the database for Active Record and PG for production
+# WHILE DEPLOYING ON HEROKU
+# group :production do
+#   gem 'pg'
+# end
+#
+# group :development do
+#   gem 'sqlite3', git: "https://github.com/larskanis/sqlite3-ruby", branch: "add-gemspec"
+# end
+#
+# WHILE ON LOCAL
 gem 'sqlite3', git: "https://github.com/larskanis/sqlite3-ruby", branch: "add-gemspec"
+
+
+
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
