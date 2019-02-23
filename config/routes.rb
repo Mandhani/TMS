@@ -1,13 +1,10 @@
 Rails.application.routes.draw do
+  resources :bookings
   resources :tours
-  get 'users/index'
-  get 'users/edit'
-  get 'users/new'
-  get 'users/show'
-  get 'users/create'
-  get 'users/update'
-  get 'users/destroy'
   devise_for :users, :controllers => { registrations: 'registrations' }
+  resources :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root to: 'tours#index'
+  root to: 'users#index'
+  match '/users',   to: 'users#index',   via: 'get'
+  match '/users/:id',     to: 'users#show',       via: 'get'
 end

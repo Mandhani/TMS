@@ -1,1 +1,43 @@
+<p id="notice"><%= notice %></p>
 
+<h1>Users</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Email address</th>
+    <th>Role type</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @users.each do |user| %>
+    <tr>
+
+      <td><%= user.name %></td>
+      <td><%= user.email %></td>
+      <td><%= user.user_type %></td>
+      <td><%= link_to 'Edit', edit_user_path(user) %></td>
+      <% if current_user.user_type == 1 %>
+        <td><%= link_to 'Destroy', user, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+      <% end %>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+<% if current_user.user_type == 1 %>
+  <%= link_to 'New User', new_user_path %>
+<% end %>
+
+<!--<br><br>-->
+<%#= link_to "List all companies", companies_url %>
+<%#= link_to "List all houses", houses_url %>
+<%# if User.find(session[:id]).role_type == "admin" || User.find(session[:id]).role_type == "realtor" %>
+  <%#= link_to "List all buyers", house_interest_lists_url %>
+<%# else %>
+  <%#= link_to "Interested House List", house_interest_lists_url %>
+<%# end %>

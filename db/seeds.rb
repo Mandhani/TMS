@@ -9,4 +9,4 @@ Usertype.create(:user_type => 'admin')
 Usertype.create(:user_type => 'customer')
 Usertype.create(:user_type => 'agent')
 
-User.create(:email => 'admin@tms.com', :password => 'password', :user_type => 1)
+User.create(:email => 'admin@tms.com', :password => 'password', :user_type => 1, :name => 'Administrator')
