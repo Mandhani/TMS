@@ -14,14 +14,15 @@
     Logged in as <strong><%= current_user.email %></strong> who is <%= Usertype.find(current_user.user_type).user_type %>.
     <%= link_to 'Edit profile', edit_user_path(current_user) %> |
     <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+    <%= yield %>
+    <%= link_to "List all tours", tours_url %>
+    <%= link_to "Interested House List", tour_interest_lists_url %>
   <% else %>
     Not logged in.
     <%= link_to "Sign up", new_user_registration_path %> |
     <%= link_to "Login", new_user_session_path  %>
-  <% end %>
     <%= yield %>
-  <%= link_to "List all tours", tours_url %>
-  <%= link_to "Interested House List", tour_interest_lists_url %>
+  <% end %>
 
   </body>
 </html>
