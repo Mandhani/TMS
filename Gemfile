@@ -20,7 +20,7 @@ end
 # gem 'sqlite3', git: "https://github.com/larskanis/sqlite3-ruby", branch: "add-gemspec"
 
 gem 'jquery-rails'
-
+gem 'therubyracer'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
