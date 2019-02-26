@@ -8,16 +8,16 @@ gem 'devise'
 gem 'rails', '~> 5.2.2'
 # Use sqlite3 as the database for Active Record and PG for production
 # WHILE DEPLOYING ON HEROKU
-# group :production do
-#   gem 'pg'
-# end
-#
-# group :development do
-#   gem 'sqlite3', git: "https://github.com/larskanis/sqlite3-ruby", branch: "add-gemspec"
-# end
-#
+group :production do
+  gem 'pg'
+end
+
+group :development do
+  gem 'sqlite3', git: "https://github.com/larskanis/sqlite3-ruby", branch: "add-gemspec"
+end
+
 # WHILE ON LOCAL
-gem 'sqlite3', git: "https://github.com/larskanis/sqlite3-ruby", branch: "add-gemspec"
+# gem 'sqlite3', git: "https://github.com/larskanis/sqlite3-ruby", branch: "add-gemspec"
 
 
 
