@@ -36,7 +36,7 @@
   <div class="field">
     <%= form.label :user_type %>
     <% if !@user.new_record? %>
-      <%= select("user", "user_type", Usertype.where("id=?", @user.id).collect{ |c| [ c.user_type, c.id] }) %>
+      <%= select("user", "user_type", Usertype.where("id=?", @user.user_type).collect{ |c| [ c.user_type, c.id] }) %>
     <% else %>
       <%= select("user", "user_type", Usertype.where("id=? or id =?", 2, 3).collect{ |c| [ c.user_type, c.id] }) %>
     <% end %>
