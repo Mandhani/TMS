@@ -28,7 +28,7 @@
 
   <div class="field">
     <%= f.label :user_type %><br />
-    <%= select("user", "user_type", Usertype.all.collect{ |c| [ c.user_type, c.id] }) %>
+    <%= select("user", "user_type", Usertype.where("id=? or id =?", 2, 3).collect{ |c| [ c.user_type, c.id] }) %>
   </div>
 
   <div class="actions">

@@ -1,8 +1,17 @@
-<h3>You are in Editing User Page</h3>
-<% if current_user.id == @user.id || current_user.user_type == 1 %>
+<p id="notice"><%= notice %></p>
 
-  <%= render 'form', user: @user %>
+<p>
+  <strong>Name:</strong>
+  <%= @user.name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+<p>
+  <strong>Role type:</strong>
+  <%= Usertype.find(@user.user_type).user_type %>
+</p>
+  <%= link_to 'Edit', edit_user_path(@user) %> |
   <%= link_to 'Back', users_path %>
-<% else %>
-  <%= link_to "You must be logged in to edit users.", new_user_session_path %>
-<% end %>

@@ -17,26 +17,31 @@
   </div>
 
   <div class="field">
-    <%= form.label :password %>
-    <%= form.password_field :password %>
-  </div>
-
-  <% if user_signed_in? %>
-    <div class="field">
-      <%= form.label :password_confirmation %><br />
-      <%= form.password_field :password_confirmation, autocomplete: "new-password" %>
-    </div>
-  <% end %>
-
-  <div class="field">
     <%= form.label :email %>
     <%= form.text_field :email %>
   </div>
 
+  <% if (current_user.id == @user.id) || @user.new_record? %>
   <div class="field">
-    <%= form.label :user_type %><br />
-    <%= select("user", "user_type", Usertype.all.collect{ |c| [ c.user_type, c.id] }) %>
+    <%= form.label :password %>
+    <%= form.password_field :password %>
   </div>
+
+    <div class="field">
+      <%= form.label :password_confirmation %><br />
+      <%= form.password_field :password_confirmation, autocomplete: "new-password" %>
+    </div>
+
+
+  <div class="field">
+    <%= form.label :user_type %>
+    <% if Usertype.find(@user.id).id == 1 %>
+      <%= select("user", "user_type", Usertype.where("id=?", 1).collect{ |c| [ c.user_type, c.id] }) %>
+    <% else %>
+      <%= select("user", "user_type", Usertype.where("id=? or id =?", 2, 3).collect{ |c| [ c.user_type, c.id] }) %>
+    <% end %>
+  </div>
+  <% end %>
 
   <div class="actions">
     <%= form.submit %>
