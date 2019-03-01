@@ -66,10 +66,13 @@
     <%= form.text_field :status %>
   </div>
 
-  <div class="field">
-    <%= form.label :waitlist %>
-    <%= form.number_field :waitlist %>
+  <div>
+  <%= form.hidden_field :waitlist, :value => 0 %>
   </div>
+    <!--  <div class="field">-->
+    <%#= form.label :waitlist %>
+    <%#= form.number_field :waitlist %>
+<!--  </div>-->
 
   <div class="actions">
     <%= form.submit %>
