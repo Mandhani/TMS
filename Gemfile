@@ -25,6 +25,8 @@ gem 'therubyracer'
 # For validating date
 gem 'validates_timeliness', '~> 5.0.0.alpha3'
 
+# For validating countries
+gem 'countries', require: 'countries/global'
 
 # Fro validating country names
 # gwm 'countires'
