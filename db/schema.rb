@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_01_204904) do
+ActiveRecord::Schema.define(version: 2019_03_01_225712) do
 
   create_table "booking_waitlists", force: :cascade do |t|
     t.integer "booking_id"
