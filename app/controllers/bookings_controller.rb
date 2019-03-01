@@ -38,8 +38,6 @@ class BookingsController < ApplicationController
       if desired_tickets > available_tickets
         redirect_to( :controller => 'bookings', :action => 'option', :user_id => booking_params[:user_id], :tour_id => booking_params[:tour_id], :quantity => booking_params[:quantity])
         return
-        #format.html { redirect_to :option, notice: 'Number of requested seats exceed the number of available seats.'}
-        #format.json { render :option, status: :unprocessable_entity, location: @booking }
       else
         book_tickets(desired_tickets)
         return
@@ -49,14 +47,12 @@ class BookingsController < ApplicationController
       book_tickets(booking_params[:quantity].to_i)
     else
       if booking_params[:option].to_i == 1
-        book_tickets(available_tickets)
-        waitlist_tickets(desired_tickets - available_tickets)
+        book_with_waitlist(available_tickets, desired_tickets - available_tickets)
       elsif booking_params[:option].to_i == 2
-        book_tickets(0)
-        waitlist_tickets(desired_tickets)
+        book_with_waitlist(0, desired_tickets)
       else
         #Cancel transaction
-        redirect_to( :controller => 'tours', :action => 'index')
+        redirect_to( :controller => 'tours', :action => 'show', :id => booking_params[:tour_id])
         return
       end
     end
@@ -91,21 +87,50 @@ class BookingsController < ApplicationController
       @booking = Booking.new(booking_params)
       @booking.quantity = count
       respond_to do |format|
-      #reduce available seats in tours model
-      @tours = Tour.find(booking_params[:tour_id])
+        #reduce available seats in tours model
+        @tours = Tour.find(booking_params[:tour_id])
         if @booking.save && @tours.update( seats: @tours.seats - count)
           format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
           format.json { render :show, status: :created, location: @booking }
         else
+          if @tour
+            @booking.errors.copy!(@tour.errors)
+          end
           format.html { render :index }
-          format.json { render json: [@booking.errors,@tours.errors], status: :unprocessable_entity }
+          format.json { render json: @booking.errors, status: :unprocessable_entity }
         end
       end
     end
 
-    def waitlist_tickets(count)
-      #TBD
-      return
+    def book_with_waitlist(book_count, wait_count)
+      @booking = Booking.new(booking_params)
+      @booking.quantity = book_count
+      #Update waitlist
+      @booking_waitlist = BookingWaitlist.new
+      @booking_waitlist.tour_id = booking_params[:tour_id]
+      @booking_waitlist.quantity = wait_count
+      #reduce available seats in tours model
+      @tours = Tour.find(booking_params[:tour_id])
+      respond_to do |format|
+        if @booking.save && @tours.update( seats: @tours.seats - book_count)
+          @booking_waitlist.booking_id = @booking.id
+          if !@booking_waitlist.save
+            if @booking_waitlist
+              @booking.errors.copy!(@booking_waitlist.errors)
+            end
+            format.html { render :option }
+            format.json { render json: @booking.errors, status: :unprocessable_entity }
+          end
+          format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
+          format.json { render :show, status: :created, location: @booking }
+        else
+          if @tour
+            @booking.errors.copy!(@tour.errors)
+          end
+          format.html { render :option }
+          format.json { render json: @booking.errors, status: :unprocessable_entity }
+        end
+      end
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_booking

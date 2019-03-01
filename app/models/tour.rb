@@ -1,5 +1,6 @@
 class Tour < ApplicationRecord
-  has_many :bookings, :class_name => "Booking", :dependent => :delete_all
+  has_many :booking_waitlists, :dependent => :delete_all
+  has_many :bookings, :dependent => :delete_all
   validates :name, presence: true
   validates :description, presence: true
   validates :price, :presence => true,  numericality: true
