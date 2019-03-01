@@ -1,7 +1,7 @@
 <%= form_with(model: booking, local: true) do |form| %>
   <% if booking.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(booking.errors.count, "error") %> prohibited this booking from being saved:</h2>
+      <h2><%= pluralize(booking.errors.count, "error") %> prohibited this booking from being successful:</h2>
 
       <ul>
       <% booking.errors.full_messages.each do |message| %>
@@ -13,17 +13,20 @@
 
   <div class="field">
     <%= form.label :quantity %>
-    <%= form.number_field :quantity %>
+    <%= form.number_field :quantity, :readonly => true %>
   </div>
 
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id %>
-  </div>
+  <%= form.hidden_field :user_id, :value => current_user.id %>
+  <%= form.hidden_field :tour_id, :value => @tour.id %>
 
   <div class="field">
-    <%= form.label :tour_id %>
-    <%= form.text_field :tour_id %>
+    <%= form.label :options %>
+    <%= f.radio_button :option, 1, :checked => true %>
+    <%= label :option_1, 'Book partial seats and add remaining to waiting list' %>
+    <%= f.radio_button :option, 2 %>
+    <%= label :option_2, 'Add all seats to waiting list' %>
+    <%= f.radio_button :option, 3 %>
+    <%= label :option_3, 'Cancel transaction' %>
   </div>
 
   <div class="actions">
