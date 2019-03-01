@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :booking_waitlists
   resources :tour_interest_lists
   match '/bookings/option', to: 'bookings#option', via: 'get'
   resources :bookings

@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_23_035330) do
+ActiveRecord::Schema.define(version: 2019_03_01_204904) do
+
+  create_table "booking_waitlists", force: :cascade do |t|
+    t.integer "booking_id"
+    t.integer "tour_id"
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["booking_id"], name: "index_booking_waitlists_on_booking_id"
+    t.index ["tour_id"], name: "index_booking_waitlists_on_tour_id"
+  end
 
   create_table "bookings", force: :cascade do |t|
     t.integer "quantity"
