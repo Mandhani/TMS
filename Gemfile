@@ -22,6 +22,8 @@ end
 gem 'jquery-rails'
 gem 'therubyracer'
 
+gem "paperclip", "~> 6.0.0"
+
 # For validating date
 gem 'validates_timeliness', '~> 5.0.0.alpha3'
 
