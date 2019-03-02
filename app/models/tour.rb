@@ -13,7 +13,7 @@ class Tour < ApplicationRecord
 
   validates :start_location, presence: true
   validates :itenary, presence: true
-  validates :contact, presence: true, format: { with: /\d{3}-\d{3}-\d{4}/, message: "bad format" }
+  validates :contact, presence: true, format: { with: /\d{10}/, message: "Provide your 10 digit contact information." }
   validates :status, presence: true
   # validates :waitlist, presence: true
 
