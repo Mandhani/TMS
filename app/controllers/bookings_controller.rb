@@ -9,7 +9,6 @@ class BookingsController < ApplicationController
     elsif User.find(current_user.id).user_type == 2
       @bookings = Booking.all.where(user_id: current_user.id)
     elsif User.find(current_user.id).user_type == 3
-      agent_tours = Tour.all.where(user_id: current_user.id)
       @bookings = Booking.all.where(tour_id: Tour.all.where(user_id: current_user.id))
     end
   end
@@ -83,20 +82,24 @@ class BookingsController < ApplicationController
   # DELETE /bookings/1.json
   def destroy
     new_seats = @booking.quantity
-    @waitlist_selected = BookingWaitlist.where("tour_id = ? AND quantity <= ?",@booking.tour_id, new_seats ).order(:created_at).limit(1).first
+    @tour_affected = Tour.find(@booking.tour_id)
+    available_seats = @tour_affected.seats + new_seats
+    @waitlist_selected = BookingWaitlist.where("tour_id = ? AND quantity <= ?",@booking.tour_id, available_seats ).order(:created_at).limit(1).first
     # Alloting seats to another booking
-    @booking_selected = Booking.find(@waitlist_selected.booking_id)
-    @booking_selected.quantity = @booking_selected.quantity + @waitlist_selected.quantity
-    @booking_selected.save
-    # Updating tour to increase seats, if any
-    if (@booking.quantity - @waitlist_selected.quantity) > 0
-      @tour_affected = Tour.find(@booking.tour_id)
+    if @waitlist_selected
+      @booking_selected = Booking.find(@waitlist_selected.booking_id)
+      @booking_selected.quantity = @booking_selected.quantity + @waitlist_selected.quantity
+      @booking_selected.save
+      # Updating tour to increase seats, if any
       @tour_affected.seats += (@booking.quantity - @waitlist_selected.quantity)
-      @tour_affected.waitlist -= (@booking.quantity - @waitlist_selected.quantity)
+      @tour_affected.waitlist -= @waitlist_selected.quantity
+      @tour_affected.save
+      # delete waitlist
+      @waitlist_selected.destroy
+    else
+      @tour_affected.seats += @booking.quantity
       @tour_affected.save
     end
-    # delete waitlist
-    @waitlist_selected.destroy
     #delete old booking now
     @booking.destroy
     respond_to do |format|

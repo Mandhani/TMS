@@ -4,7 +4,13 @@ class BookingWaitlistsController < ApplicationController
   # GET /booking_waitlists
   # GET /booking_waitlists.json
   def index
-    @booking_waitlists = BookingWaitlist.all
+    if(User.find(current_user.id).user_type == 1)
+      @booking_waitlists = BookingWaitlist.all
+    elsif User.find(current_user.id).user_type == 2
+      @booking_waitlists = BookingWaitlist.all.where(booking_id: Booking.all.where(user_id: current_user.id))
+    elsif User.find(current_user.id).user_type == 3
+      @booking_waitlists = BookingWaitlist.all.where(tour_id: Tour.all.where(user_id: current_user.id))
+    end
   end
 
   # GET /booking_waitlists/1

@@ -19,6 +19,7 @@
     <br />
     <%= link_to "View All Tours", tours_url %>
     | <%= link_to "View Bookings", bookings_url %>
+    | <%= link_to "View Waitlists", booking_waitlists_url %>
     <% if User.find(current_user.id).user_type == 3 || User.find(current_user.id).user_type == 1 %>
       | <%= link_to "View Listed tours", tours_url+"/"+current_user.id.to_s+"/user" %>
     <% end %>
