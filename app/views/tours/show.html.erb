@@ -59,6 +59,10 @@
   <strong>Waitlist:</strong>
   <%= @tour.waitlist %>
 </p>
+<p>
+  <strong>Photo:</strong>
+  <%= image_tag @tour.avatar.url %>
+</p>
 <!-- Booking start -->
 <% if User.find(current_user.id).user_type == 2 || User.find(current_user.id).user_type == 1%>
   <p>

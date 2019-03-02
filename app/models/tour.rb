@@ -15,6 +15,9 @@ class Tour < ApplicationRecord
   validates :itenary, presence: true
   validates :contact, presence: true, format: { with: /\d{10}/, message: "Provide your 10 digit contact information." }
   validates :status, presence: true
+  has_attached_file :avatar, default_url: "/images/:style/missing.png"
+  #validates_attachment_presence :avatar
+  validates_attachment_content_type :avatar, :content_type => ['image/jpg', 'image/png']
   # validates :waitlist, presence: true
 
   #https://medium.com/lightthefuse/ruby-on-rails-date-validation-in-a-booking-and-disabling-dates-in-date-picker-3e5b4e9b4640

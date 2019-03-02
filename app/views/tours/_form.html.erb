@@ -1,4 +1,4 @@
-<%= form_with(model: tour, local: true) do |form| %>
+<%= form_with(model: tour, local: true, :html => { :multipart => true} ) do |form| %>
   <% if tour.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(tour.errors.count, "error") %> prohibited this tour from being saved:</h2>
@@ -74,7 +74,10 @@
     <%#= form.label :waitlist %>
     <%#= form.number_field :waitlist %>
 <!--  </div>-->
-
+  <p>
+    <strong>Photo:</strong>
+    <%= form.file_field :avatar %>
+  </p>
   <div class="actions">
     <%= form.submit %>
   </div>
