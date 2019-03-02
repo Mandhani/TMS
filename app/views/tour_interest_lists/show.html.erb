@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @tour_interest_list.user %>
+</p>
+
+<p>
+  <strong>Tour:</strong>
+  <%= @tour_interest_list.tour %>
+</p>
+
+<%= link_to 'Edit', edit_tour_interest_list_path(@tour_interest_list) %> |
+<%= link_to 'Back', tour_interest_lists_path %>

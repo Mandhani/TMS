@@ -10,7 +10,55 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_15_233224) do
+ActiveRecord::Schema.define(version: 2019_03_01_225712) do
+
+  create_table "booking_waitlists", force: :cascade do |t|
+    t.integer "booking_id"
+    t.integer "tour_id"
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["booking_id"], name: "index_booking_waitlists_on_booking_id"
+    t.index ["tour_id"], name: "index_booking_waitlists_on_tour_id"
+  end
+
+  create_table "bookings", force: :cascade do |t|
+    t.integer "quantity"
+    t.integer "user_id"
+    t.integer "tour_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tour_id"], name: "index_bookings_on_tour_id"
+    t.index ["user_id"], name: "index_bookings_on_user_id"
+  end
+
+  create_table "tour_interest_lists", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "tour_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tour_id"], name: "index_tour_interest_lists_on_tour_id"
+    t.index ["user_id"], name: "index_tour_interest_lists_on_user_id"
+  end
+
+  create_table "tours", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.float "price"
+    t.datetime "booking_deadline"
+    t.datetime "duration_start"
+    t.datetime "duration_end"
+    t.string "start_location"
+    t.text "itenary"
+    t.string "contact"
+    t.integer "seats"
+    t.string "status"
+    t.integer "waitlist"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_tours_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -20,8 +68,16 @@ ActiveRecord::Schema.define(version: 2019_02_15_233224) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_type"
+    t.string "name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "usertypes", force: :cascade do |t|
+    t.string "user_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

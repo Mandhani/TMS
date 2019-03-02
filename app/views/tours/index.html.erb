@@ -1,0 +1,52 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Tours</h1>
+<script>
+</script>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Booking deadline</th>
+        <th>Duration start</th>
+        <th>Duration end</th>
+        <th>Start location</th>
+        <th>Itenary</th>
+      <th>Contact</th>
+      <th>Seats</th>
+      <th>Status</th>
+      <th>Waitlist</th>
+      <th colspan="4"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tours.each do |tour| %>
+      <tr>
+        <td><%= tour.name %></td>
+        <td><%= tour.description %></td>
+        <td><%= tour.price %></td>
+        <td><%= tour.booking_deadline %></td>
+          <td><%= tour.duration_start %></td>
+          <td><%= tour.duration_end %></td>
+          <td><%= tour.start_location %></td>
+          <td><%= tour.itenary %></td>
+        <td><%= tour.contact %></td>
+        <td><%= tour.seats %></td>
+        <td><%= tour.status %></td>
+        <td><%= tour.waitlist %></td>
+        <td><%= link_to 'Show', tour %></td>
+        <% if tour.user_id == current_user.id || User.find(current_user.id).user_type == 1%>
+          <td><%= link_to 'Edit', edit_tour_path(tour) %></td>
+          <td><%= link_to 'Destroy', tour, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Tour', new_tour_path %>

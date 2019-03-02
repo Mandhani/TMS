@@ -10,13 +10,28 @@
   </head>
 
   <body>
-    <% if notice %>
-      <p class="alert alert-success"><%= notice %></p>
+  <% if user_signed_in? %>
+    Logged in as <strong><%= current_user.email %></strong> who is <%= Usertype.find(current_user.user_type).user_type %>.
+    <%= link_to 'Edit profile', edit_user_path(current_user) %> |
+    <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+    <%= yield %>
+    <br />
+    <br />
+    <%= link_to "View All Tours", tours_url %>
+    | <%= link_to "View Bookings", bookings_url %>
+    <% if User.find(current_user.id).user_type == 3 || User.find(current_user.id).user_type == 1 %>
+      | <%= link_to "View Listed tours", tours_url+"/"+current_user.id.to_s+"/user" %>
     <% end %>
-    <% if alert %>
-      <p class="alert alert-danger"><%= alert %></p>
+    <% if User.find(current_user.id).user_type == 2%>
+      | <%= link_to "Bookmarked Tours List", tour_interest_lists_url %>
     <% end %>
 
+  <% else %>
+    Not logged in.
+    <%= link_to "Sign up", new_user_registration_path %> |
+    <%= link_to "Login", new_user_session_path  %>
     <%= yield %>
+  <% end %>
+
   </body>
 </html>

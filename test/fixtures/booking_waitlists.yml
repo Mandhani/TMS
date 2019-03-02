@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  booking: one
+  tour: one
+  quantity: 1
+
+two:
+  booking: two
+  tour: two
+  quantity: 1

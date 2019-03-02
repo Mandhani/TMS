@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Booking:</strong>
+  <%= @booking_waitlist.booking %>
+</p>
+
+<p>
+  <strong>Tour:</strong>
+  <%= @booking_waitlist.tour %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @booking_waitlist.quantity %>
+</p>
+
+<%= link_to 'Edit', edit_booking_waitlist_path(@booking_waitlist) %> |
+<%= link_to 'Back', booking_waitlists_path %>

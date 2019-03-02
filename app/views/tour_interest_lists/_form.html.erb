@@ -1,0 +1,27 @@
+<%= form_with(model: tour_interest_list, local: true) do |form| %>
+  <% if tour_interest_list.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(tour_interest_list.errors.count, "error") %> prohibited this tour_interest_list from being saved:</h2>
+
+      <ul>
+      <% tour_interest_list.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :user_id %>
+    <%= form.text_field :user_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tour_id %>
+    <%= form.text_field :tour_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

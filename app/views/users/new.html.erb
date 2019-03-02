@@ -1,0 +1,6 @@
+<h3>New Users page</h3>
+<% if current_user.user_type == 1 %>
+  <%= render 'form', user: @user %>
+<%else%>
+  <h3> You don't have permission to add user. </h3>
+<% end %>

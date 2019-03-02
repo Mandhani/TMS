@@ -1,0 +1,32 @@
+<%= form_with(model: booking_waitlist, local: true) do |form| %>
+  <% if booking_waitlist.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(booking_waitlist.errors.count, "error") %> prohibited this booking_waitlist from being saved:</h2>
+
+      <ul>
+      <% booking_waitlist.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :booking_id %>
+    <%= form.text_field :booking_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tour_id %>
+    <%= form.text_field :tour_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :quantity %>
+    <%= form.number_field :quantity %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

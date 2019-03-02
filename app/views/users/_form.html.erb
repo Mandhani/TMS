@@ -1,0 +1,50 @@
+<%= form_for @user do |form| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.text_field :email %>
+  </div>
+
+  <% if (current_user.id == @user.id) || @user.new_record? %>
+  <div class="field">
+    <%= form.label :password %>
+    <%= form.password_field :password %>
+  </div>
+
+    <div class="field">
+      <%= form.label :password_confirmation %><br />
+      <%= form.password_field :password_confirmation, autocomplete: "new-password" %>
+    </div>
+
+
+  <div class="field">
+    <%= form.label :user_type %>
+    <% if !@user.new_record? %>
+      <%= select("user", "user_type", Usertype.where("id=?", @user.user_type).collect{ |c| [ c.user_type, c.id] }) %>
+    <% else %>
+      <%= select("user", "user_type", Usertype.where("id=? or id =?", 2, 3).collect{ |c| [ c.user_type, c.id] }) %>
+    <% end %>
+  </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+
+<% end %>

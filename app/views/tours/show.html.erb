@@ -1,0 +1,88 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @tour.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @tour.description %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @tour.price %>
+</p>
+
+<p>
+  <strong>Booking deadline:</strong>
+  <%= @tour.booking_deadline %>
+</p>
+
+<p>
+  <strong>Duration start:</strong>
+  <%= @tour.duration_start %>
+</p>
+
+<p>
+  <strong>Duration end:</strong>
+  <%= @tour.duration_end %>
+</p>
+
+<p>
+  <strong>Start location:</strong>
+  <%= @tour.start_location %>
+</p>
+
+<p>
+  <strong>Itenary:</strong>
+  <%= @tour.itenary %>
+</p>
+
+<p>
+  <strong>Contact:</strong>
+  <%= @tour.contact %>
+</p>
+
+<p>
+  <strong>Seats:</strong>
+  <%= @tour.seats %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @tour.status %>
+</p>
+
+<p>
+  <strong>Waitlist:</strong>
+  <%= @tour.waitlist %>
+</p>
+<!-- Booking start -->
+<% if User.find(current_user.id).user_type == 2 || User.find(current_user.id).user_type == 1%>
+  <p>
+    <%= form_with(model: Booking.new, :as => :code, :html => {:multipart => true}, method: "post") do |form| %>
+
+    <div class="field">
+      <%= form.label :number_of_seats %>
+      <%= form.number_field :quantity %>
+    </div>
+
+    <%= form.hidden_field :user_id, :value => current_user.id %>
+    <%= form.hidden_field :tour_id, :value => @tour.id %>
+    <%= form.hidden_field :option, :value => 0 %>
+
+    <div class="actions">
+      <%= form.submit %>
+    </div>
+  <% end %>
+
+  </p>
+<% end %>
+<!-- Booking end -->
+<% if @tour.user_id == current_user.id || User.find(current_user.id).user_type == 1%>
+  <%= link_to 'Edit', edit_tour_path(@tour) %> |
+  <%= link_to 'Destroy', @tour, method: :delete, data: { confirm: 'Are you sure?' } %> |
+<% end %>
+<%= link_to 'Back', tours_path %>
