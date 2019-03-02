@@ -43,7 +43,7 @@ class BookingsController < ApplicationController
     desired_tickets = booking_params[:quantity].to_i
     if booking_params[:option].to_i == 0
       if desired_tickets > available_tickets
-        redirect_to( :controller => 'bookings', :action => 'option', :user_id => booking_params[:user_id], :tour_id => booking_params[:tour_id], :quantity => booking_params[:quantity])
+        redirect_to( :action => 'option', :user_id => booking_params[:user_id], :tour_id => booking_params[:tour_id], :quantity => booking_params[:quantity], status: 301)
         return
       else
         book_tickets(desired_tickets)
@@ -82,6 +82,8 @@ class BookingsController < ApplicationController
   # DELETE /bookings/1
   # DELETE /bookings/1.json
   def destroy
+    new_seats = @booking.quantity
+    newBookingId = BookingWaitlist.where("tour_id: ? AND quantity > ?",@booking.tour_id, new_seats )
     @booking.destroy
     respond_to do |format|
       format.html { redirect_to bookings_url, notice: 'Booking was successfully destroyed.' }

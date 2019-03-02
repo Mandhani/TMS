@@ -8,5 +8,6 @@ class User < ApplicationRecord
   # Reference: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
   validates :email, presence: true, uniqueness: true, format: {with: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i, on: :create}
   has_many :tours, :dependent => :delete_all
+  has_many :bookings, :dependent => :destroy
 end
 
