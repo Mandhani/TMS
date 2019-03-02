@@ -83,7 +83,21 @@ class BookingsController < ApplicationController
   # DELETE /bookings/1.json
   def destroy
     new_seats = @booking.quantity
-    newBookingId = BookingWaitlist.where("tour_id: ? AND quantity > ?",@booking.tour_id, new_seats )
+    @waitlist_selected = BookingWaitlist.where("tour_id = ? AND quantity <= ?",@booking.tour_id, new_seats ).order(:created_at).limit(1).first
+    # Alloting seats to another booking
+    @booking_selected = Booking.find(@waitlist_selected.booking_id)
+    @booking_selected.quantity = @booking_selected.quantity + @waitlist_selected.quantity
+    @booking_selected.save
+    # Updating tour to increase seats, if any
+    if (@booking.quantity - @waitlist_selected.quantity) > 0
+      @tour_affected = Tour.find(@booking.tour_id)
+      @tour_affected.seats += (@booking.quantity - @waitlist_selected.quantity)
+      @tour_affected.waitlist -= (@booking.quantity - @waitlist_selected.quantity)
+      @tour_affected.save
+    end
+    # delete waitlist
+    @waitlist_selected.destroy
+    #delete old booking now
     @booking.destroy
     respond_to do |format|
       format.html { redirect_to bookings_url, notice: 'Booking was successfully destroyed.' }
