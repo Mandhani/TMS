@@ -17,8 +17,15 @@
     <%= yield %>
     <br />
     <br />
-    <%= link_to "List all tours", tours_url %> |
-    <%= link_to "Bookmarked Tours List", tour_interest_lists_url %>
+    <%= link_to "View All Tours", tours_url %>
+    | <%= link_to "View Bookings", bookings_url %>
+    <% if User.find(current_user.id).user_type == 3 || User.find(current_user.id).user_type == 1 %>
+      | <%= link_to "View Listed tours", tours_url+"/"+current_user.id.to_s+"/user" %>
+    <% end %>
+    <% if User.find(current_user.id).user_type == 2%>
+      | <%= link_to "Bookmarked Tours List", tour_interest_lists_url %>
+    <% end %>
+
   <% else %>
     Not logged in.
     <%= link_to "Sign up", new_user_registration_path %> |

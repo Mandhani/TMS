@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   root to: 'users#index'
   match '/users',   to: 'users#index',   via: 'get'
   match '/users/:id',     to: 'users#show',       via: 'get'
+  match '/tours/:id/user',     to: 'tours#index_user',       via: 'get'
 end

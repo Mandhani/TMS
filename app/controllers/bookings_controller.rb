@@ -4,7 +4,14 @@ class BookingsController < ApplicationController
   # GET /bookings
   # GET /bookings.json
   def index
-    @bookings = Booking.all
+    if(User.find(current_user.id).user_type == 1)
+      @bookings = Booking.all
+    elsif User.find(current_user.id).user_type == 2
+      @bookings = Booking.all.where(user_id: current_user.id)
+    elsif User.find(current_user.id).user_type == 3
+      agent_tours = Tour.all.where(user_id: current_user.id)
+      @bookings = Booking.all.where(tour_id: Tour.all.where(user_id: current_user.id))
+    end
   end
 
   # GET /bookings/1
@@ -112,7 +119,7 @@ class BookingsController < ApplicationController
       #reduce available seats in tours model
       @tours = Tour.find(booking_params[:tour_id])
       respond_to do |format|
-        if @booking.save && @tours.update( seats: @tours.seats - book_count)
+        if @booking.save && @tours.update( seats: @tours.seats - book_count, waitlist: @tours.waitlist + wait_count)
           @booking_waitlist.booking_id = @booking.id
           if !@booking_waitlist.save
             if @booking_waitlist

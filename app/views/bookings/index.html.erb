@@ -5,9 +5,9 @@
 <table>
   <thead>
     <tr>
-      <th>Quantity</th>
-      <th>User</th>
       <th>Tour</th>
+      <th>Seats</th>
+      <th>User</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -15,12 +15,14 @@
   <tbody>
     <% @bookings.each do |booking| %>
       <tr>
+        <td><%= booking.tour.name %></td>
         <td><%= booking.quantity %></td>
         <td><%= booking.user.name %></td>
-        <td><%= booking.tour.name %></td>
         <td><%= link_to 'Show', booking %></td>
-        <td><%= link_to 'Edit', edit_booking_path(booking) %></td>
-        <td><%= link_to 'Destroy', booking, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if User.find(current_user.id).user_type == 1 || current_user.id == booking.user_id %>
+          <td><%= link_to 'Edit', edit_booking_path(booking) %></td>
+          <td><%= link_to 'Destroy', booking, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

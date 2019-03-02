@@ -38,8 +38,10 @@
         <td><%= tour.status %></td>
         <td><%= tour.waitlist %></td>
         <td><%= link_to 'Show', tour %></td>
-        <td><%= link_to 'Edit', edit_tour_path(tour) %></td>
-        <td><%= link_to 'Destroy', tour, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if tour.user_id == current_user.id || User.find(current_user.id).user_type == 1%>
+          <td><%= link_to 'Edit', edit_tour_path(tour) %></td>
+          <td><%= link_to 'Destroy', tour, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

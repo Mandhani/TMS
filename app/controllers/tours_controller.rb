@@ -7,6 +7,11 @@ class ToursController < ApplicationController
     @tours = Tour.all
   end
 
+  # GET /tours/1/user
+  def index_user
+    @tours = Tour.all.where(user_id: params[:id])
+  end
+
   # GET /tours/1
   # GET /tours/1.json
   def show
@@ -69,6 +74,6 @@ class ToursController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tour_params
-      params.require(:tour).permit(:name, :description, :price, :booking_deadline, :duration_start, :duration_end, :start_location, :itenary, :contact, :seats, :status, :waitlist)
+      params.require(:tour).permit(:name, :description, :price, :booking_deadline, :duration_start, :duration_end, :start_location, :itenary, :contact, :seats, :status, :waitlist, :user_id)
     end
 end
